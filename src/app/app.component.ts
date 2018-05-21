@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Mighty Pika';
-  links = [{ path: '/', icon: 'home', label: 'Home' }];
+  links = [
+    { path: '/', icon: 'home', label: 'Home' },
+    { path: '/profile', icon: 'account_circle', label: 'Profile' },
+    { path: '/calendar', icon: 'calendar_today', label: 'Calendar' },
+    { path: '/about', icon: 'help', label: 'About' }
+  ];
 }

@@ -2,23 +2,23 @@
   <mat-card-header>
     <mat-card-title>
       <h1>
-        <span *ngIf="selectedItem.id; else prompt">Editing {{originalName}}</span>
+        <span *ngIf="selectedRun.id; else prompt">Editing {{originalName}}</span>
         <ng-template #prompt>Create</ng-template>
       </h1>
     </mat-card-title>
   </mat-card-header>
-  <form (submit)="saved.emit(selectedItem)">
+  <form (submit)="saved.emit(selectedRun)">
     <mat-card-content>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Name" [(ngModel)]="selectedItem.name" type="text" name="name">
+        <input matInput placeholder="Name" [(ngModel)]="selectedRun.name" type="text" name="name">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Description" [(ngModel)]="selectedItem.description" type="text" name="description">
+        <input matInput placeholder="Description" [(ngModel)]="selectedRun.description" type="text" name="description">
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
       <button type="submit" mat-button>Save</button>
-      <button type="button" mat-button (click)="cancelled.emit(selectedItem)">Cancel</button>
+      <button type="button" mat-button (click)="cancelled.emit(selectedRun)">Cancel</button>
     </mat-card-actions>
   </form>
 </mat-card>

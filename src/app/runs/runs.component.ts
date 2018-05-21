@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Run } from '../shared';
+import { Run, RunsService } from '../shared';
 
 @Component({
   selector: 'app-runs',
@@ -7,46 +7,58 @@ import { Run } from '../shared';
   styleUrls: ['./runs.component.css']
 })
 export class RunsComponent implements OnInit {
-  runs = [
-    {
-      id: 1,
-      name: 'Red Widget',
-      description: 'This is a red widget'
-    },
-    {
-      id: 2,
-      name: 'Orange Widget',
-      description: 'This is an orange widget'
-    },
-    {
-      id: 3,
-      name: 'Yellow Widget',
-      description: 'This is a yellow widget'
-    },
-    {
-      id: 4,
-      name: 'Green Widget',
-      description: 'This is a green widget'
-    },
-    {
-      id: 5,
-      name: 'Blue Widget',
-      description: 'This is a blue widget'
-    },
-    {
-      id: 6,
-      name: 'Indigo Widget',
-      description: 'This is a indigo widget'
-    },
-    {
-      id: 7,
-      name: 'Violet Widget',
-      description: 'This is a violet widget'
-    }
-  ];
+  runs: Run[];
   currentRun: Run;
 
-  constructor() {}
+  constructor(private runsService: RunsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getRuns();
+    this.resetCurrentRun();
+  }
+
+  resetCurrentRun() {
+    this.currentRun = { id: null, name: '', description: '' };
+  }
+
+  selectRun(run) {
+    this.currentRun = run;
+  }
+
+  cancel(run) {
+    this.resetCurrentRun();
+  }
+
+  getRuns() {
+    this.runsService.all().subscribe(runs => (this.runs = runs));
+  }
+
+  saveRun(run) {
+    if (!run.id) {
+      this.createRun(run);
+    } else {
+      this.updateRun(run);
+    }
+  }
+
+  createRun(run) {
+    this.runsService.create(run).subscribe(response => {
+      this.getRuns();
+      this.resetCurrentRun();
+    });
+  }
+
+  updateRun(run) {
+    this.runsService.update(run).subscribe(response => {
+      this.getRuns();
+      this.resetCurrentRun();
+    });
+  }
+
+  deleteRun(run) {
+    this.runsService.delete(run).subscribe(response => {
+      this.getRuns();
+      this.resetCurrentRun();
+    });
+  }
 }
